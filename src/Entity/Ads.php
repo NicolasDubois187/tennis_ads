@@ -28,6 +28,24 @@ class Ads
     #[ORM\Column(type: 'boolean',nullable: true)]
     private $done;
 
+
+    #[ORM\ManyToOne(targetEntity: MaterialType::class, inversedBy: 'ads')]
+    private $materialType;
+
+    #[ORM\ManyToOne(targetEntity: AdType::class, inversedBy: 'ads')]
+    private $adType;
+
+    #[ORM\OneToOne(targetEntity: Media::class, cascade: ['persist', 'remove'])]
+    private $media;
+
+    #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'ads')]
+    private $brand;
+
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ads_user')]
+    private $autor;
+
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,4 +110,71 @@ class Ads
 
         return $this;
     }
+
+
+
+    public function getMaterialType(): ?MaterialType
+    {
+        return $this->materialType;
+    }
+
+    public function setMaterialType(?MaterialType $materialType): self
+    {
+        $this->materialType = $materialType;
+
+        return $this;
+    }
+
+    public function getAdType(): ?AdType
+    {
+        return $this->adType;
+    }
+
+    public function setAdType(?AdType $adType): self
+    {
+        $this->adType = $adType;
+
+        return $this;
+    }
+
+    public function getMedia(): ?Media
+    {
+        return $this->media;
+    }
+
+    public function setMedia(?Media $media): self
+    {
+        $this->media = $media;
+
+        return $this;
+    }
+
+    public function getBrand(): ?Brand
+    {
+        return $this->brand;
+    }
+
+    public function setBrand(?Brand $brand): self
+    {
+        $this->brand = $brand;
+
+        return $this;
+    }
+
+    public function getAutor(): ?User
+    {
+        return $this->autor;
+    }
+
+    public function setAutor(?User $autor): self
+    {
+        $this->autor = $autor;
+
+        return $this;
+    }
+
+
+
+
+
 }

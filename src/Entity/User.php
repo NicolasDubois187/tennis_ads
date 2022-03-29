@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -32,6 +36,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $phone;
+
+    #[ORM\OneToMany(mappedBy: 'autor', targetEntity: Ads::class)]
+    private $ads_user;
+
+    public function __construct()
+    {
+        $this->ads_user = new ArrayCollection();
+    }
+
+
+
 
     public function getId(): ?int
     {
@@ -157,4 +172,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Ads>
+     */
+    public function getAdsUser(): Collection
+    {
+        return $this->ads_user;
+    }
+
+    public function addAdsUser(Ads $adsUser): self
+    {
+        if (!$this->ads_user->contains($adsUser)) {
+            $this->ads_user[] = $adsUser;
+            $adsUser->setAutor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdsUser(Ads $adsUser): self
+    {
+        if ($this->ads_user->removeElement($adsUser)) {
+            // set the owning side to null (unless already changed)
+            if ($adsUser->getAutor() === $this) {
+                $adsUser->setAutor(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }
