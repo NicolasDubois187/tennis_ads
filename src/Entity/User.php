@@ -37,16 +37,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $phone;
 
-    #[ORM\OneToMany(mappedBy: 'autor', targetEntity: Ads::class)]
-    private $ads_user;
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Ads::class)]
+    private $userAds;
+
+    #[ORM\OneToOne(targetEntity: ProfilePics::class, cascade: ['persist', 'remove'])]
+    private $profilePics;
+
+
 
     public function __construct()
     {
-        $this->ads_user = new ArrayCollection();
+        $this->userAds = new ArrayCollection();
     }
-
-
-
 
     public function getId(): ?int
     {
@@ -176,32 +178,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @return Collection<int, Ads>
      */
-    public function getAdsUser(): Collection
+    public function getUserAds(): Collection
     {
-        return $this->ads_user;
+        return $this->userAds;
     }
 
-    public function addAdsUser(Ads $adsUser): self
+    public function addUserAd(Ads $userAd): self
     {
-        if (!$this->ads_user->contains($adsUser)) {
-            $this->ads_user[] = $adsUser;
-            $adsUser->setAutor($this);
+        if (!$this->userAds->contains($userAd)) {
+            $this->userAds[] = $userAd;
+            $userAd->setAuthor($this);
         }
 
         return $this;
     }
 
-    public function removeAdsUser(Ads $adsUser): self
+    public function removeUserAd(Ads $userAd): self
     {
-        if ($this->ads_user->removeElement($adsUser)) {
+        if ($this->userAds->removeElement($userAd)) {
             // set the owning side to null (unless already changed)
-            if ($adsUser->getAutor() === $this) {
-                $adsUser->setAutor(null);
+            if ($userAd->getAuthor() === $this) {
+                $userAd->setAuthor(null);
             }
         }
 
         return $this;
     }
+
+    public function getProfilePics(): ?ProfilePics
+    {
+        return $this->profilePics;
+    }
+
+    public function setProfilePics(?ProfilePics $profilePics): self
+    {
+        $this->profilePics = $profilePics;
+
+        return $this;
+    }
+
+
+
 
 
 }

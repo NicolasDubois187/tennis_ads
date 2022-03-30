@@ -30,9 +30,11 @@ class Ads
 
 
     #[ORM\ManyToOne(targetEntity: MaterialType::class, inversedBy: 'ads')]
+    #[ORM\JoinColumn(nullable: false)]
     private $materialType;
 
     #[ORM\ManyToOne(targetEntity: AdType::class, inversedBy: 'ads')]
+    #[ORM\JoinColumn(nullable: false)]
     private $adType;
 
     #[ORM\OneToOne(targetEntity: Media::class, cascade: ['persist', 'remove'])]
@@ -41,9 +43,9 @@ class Ads
     #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'ads')]
     private $brand;
 
-    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'ads_user')]
-    private $autor;
-
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'userAds')]
+    #[ORM\JoinColumn(nullable: false)]
+    private $author;
 
 
     public function getId(): ?int
@@ -161,18 +163,17 @@ class Ads
         return $this;
     }
 
-    public function getAutor(): ?User
+    public function getAuthor(): ?User
     {
-        return $this->autor;
+        return $this->author;
     }
 
-    public function setAutor(?User $autor): self
+    public function setAuthor(?User $author): self
     {
-        $this->autor = $autor;
+        $this->author = $author;
 
         return $this;
     }
-
 
 
 
