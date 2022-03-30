@@ -2,30 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\AdTypes;
+use App\Entity\AdType;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method AdTypes|null find($id, $lockMode = null, $lockVersion = null)
- * @method AdTypes|null findOneBy(array $criteria, array $orderBy = null)
- * @method AdTypes[]    findAll()
- * @method AdTypes[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method AdType|null find($id, $lockMode = null, $lockVersion = null)
+ * @method AdType|null findOneBy(array $criteria, array $orderBy = null)
+ * @method AdType[]    findAll()
+ * @method AdType[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class AdTypeRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, AdTypes::class);
+        parent::__construct($registry, AdType::class);
     }
 
     /**
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function add(AdTypes $entity, bool $flush = true): void
+    public function add(AdType $entity, bool $flush = true): void
     {
         $this->_em->persist($entity);
         if ($flush) {
@@ -37,7 +37,7 @@ class AdTypeRepository extends ServiceEntityRepository
      * @throws ORMException
      * @throws OptimisticLockException
      */
-    public function remove(AdTypes $entity, bool $flush = true): void
+    public function remove(AdType $entity, bool $flush = true): void
     {
         $this->_em->remove($entity);
         if ($flush) {
@@ -46,7 +46,7 @@ class AdTypeRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return AdTypes[] Returns an array of AdTypes objects
+    //  * @return AdType[] Returns an array of AdType objects
     //  */
     /*
     public function findByExampleField($value)
@@ -63,7 +63,7 @@ class AdTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?AdTypes
+    public function findOneBySomeField($value): ?AdType
     {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')

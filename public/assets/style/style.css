@@ -1,0 +1,23 @@
+body {
+    background-color: #5eb5e0;
+}
+.adsContainer {
+    display: grid;
+    grid-template-columns: 40% 1fr 1fr;
+    border: 1px solid black;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+}
+.adsData {
+    display: grid;
+}
+.adsImg img {
+    max-width: 50%;
+}
+.adData {
+    display: grid;
+}
+#adImg {
+    max-width: 20%;
+}

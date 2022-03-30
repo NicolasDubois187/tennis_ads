@@ -1,15 +1,29 @@
 {% extends 'base.html.twig' %}
-{% block title %}Hello AdsController!{% endblock %}
+{% block title %}Tennis_ads{% endblock %}
 {% block body %}
 
-<main>
     <h1>Annonces</h1>
     <a href="{{ path('home') }}">retour à l'accueil</a>
     {% for ad in ads %}
         <div class="adsContainer">
+            <div class="adsData">
+                <h2>Titre : {{ ad.title }}</h2>
+                <h4>Type annonce : {{ ad.adType.name }}</h4>
+                <span>Catégorie : {{ ad.materialType.name }}</span>
+                <span>Marque : {{ ad.brand.name }}</span>
+                <span>Ajoutée le : {{ ad.date | format_date('short', locale='fr') }}</span>
+                <span>Ville : {{ ad.city }}</span>
 
+            </div>
+            <div class="adsImg">
+            {% if ad.media %}
+                <img src="../public/upload_directory/{{ ad.media.name }}" alt="{{ ad.media.alt }}">
+            {% endif %}
+            </div>
+            <p>Description : {{ ad.text }}</p>
+            <a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
         </div>
+        <a href="{{ path('addAd') }}">créer une annonce</a>
     {% endfor %}
 
-</main>
 {% endblock %}
