@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}Hello AdsController!{% endblock %}
-
 {% block body %}
 
+<main>
+    <h1>Annonces</h1>
+    <a href="{{ path('home') }}">retour à l'accueil</a>
+    {% for ad in ads %}
+        <div class="adsContainer">
 
-    <h1>Hello !</h1>
+        </div>
+    {% endfor %}
 
-
+</main>
 {% endblock %}

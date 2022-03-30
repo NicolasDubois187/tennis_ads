@@ -33,7 +33,7 @@ class Ads
     #[ORM\JoinColumn(nullable: false)]
     private $materialType;
 
-    #[ORM\ManyToOne(targetEntity: AdType::class, inversedBy: 'ads')]
+    #[ORM\ManyToOne(targetEntity: AdTypes::class, inversedBy: 'ads')]
     #[ORM\JoinColumn(nullable: false)]
     private $adType;
 
@@ -127,12 +127,12 @@ class Ads
         return $this;
     }
 
-    public function getAdType(): ?AdType
+    public function getAdType(): ?AdTypes
     {
         return $this->adType;
     }
 
-    public function setAdType(?AdType $adType): self
+    public function setAdType(?AdTypes $adType): self
     {
         $this->adType = $adType;
 
