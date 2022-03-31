@@ -6,6 +6,7 @@ use App\Entity\Ads;
 use App\Entity\Media;
 use App\Form\AdTypeForm;
 use App\Repository\AdsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,14 @@ class AdsController extends AbstractController
     #[Route('/ads', name: 'ads', methods: ['GET'])]
     public function ads(AdsRepository $adsRepository): Response
     {
-//        $ads = $adsRepository->findBy(['done' => false]);
-        $ads = $adsRepository->findAll();
+        $ads = $adsRepository->findBy(['done' => false], ['date' => 'DESC']);
+        $adDone = $adsRepository->findBy(['done' => true]);
 
-        return $this->render('ads/ads.html.twig', [
-            'ads' => $ads,
-        ]);
+        if ($ads) {
+            return $this->render('ads/ads.html.twig', [ 'ads' => $ads]);
+        } else {
+            return $this->render('ads/deleteAd.html.twig', [ 'adDone' => $adDone]);
+        }
     }
 
     #[Route('/ad/{id}', name: 'ad', methods: ['GET'])]
@@ -55,10 +58,68 @@ class AdsController extends AbstractController
                 $ad->setMedia($media);
             }
             $ad->setDate($now);
+            $ad->setDone(false);
             $adRepository->add($ad);
 
             return $this->redirectToRoute('ads');
         }
         return $this->render('ads/addAd.html.twig', ['adForm' => $form->createView()]);
     }
+
+    #[Route('/adUpdate/{id}', name: 'adUpdate', methods: ['GET', 'POST'])]
+    public function adUpdate($id, AdsRepository $adRepository, Request $request, SluggerInterface $slugger)
+    {
+        $ad = $adRepository->findOneBy(["id" => $id]);
+        $ad->getDone();
+        $media = new Media();
+
+        $form = $this->createForm(AdTypeForm::class, $ad);
+        dd($form);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('media')->getData()) {
+                $mediaFile = $form->get('media')->getData();
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $fileName = $safeFilename . '-' . uniqid() . '-' . $mediaFile->guessExtension();
+                $mediaFile->move($this->getParameter('pathUpload_directory'), $fileName);
+
+                $media->setName($fileName);
+                $ad->setDone(false)
+                    ->setMedia($media);
+                $adRepository->add($ad);
+            } else {
+                $adRepository->add($ad);
+            }
+            return $this->redirectToRoute('ads');
+        }
+        return $this->render('ads/adUpdate.html.twig', [
+            'adForm' => $form->createView(),
+            'ad' => $ad
+        ]);
+    }
+
+    #[Route('/adStatus/{id}', name: 'changeStatus', methods: ['GET'])]
+    public function changeStatus(AdsRepository $adRepository, $id, EntityManagerInterface $entityManager)
+    {
+        $ad = $adRepository->findOneBy(["id" => $id]);
+        if ($ad->getDone(false)) {
+            $ad->setDone(true);
+        } else {
+            $ad->setDone(false);
+        }
+        $entityManager->persist($ad);
+        $entityManager->flush();
+        return $this->redirectToRoute('deleteAd');
+    }
+    #[Route('/deleteAd/{id}', name: 'deleteAd', methods: ['GET'])]
+    public function deleteAd(AdsRepository $adRepository, $id, EntityManagerInterface $entityManager)
+    {
+        $ad = $adRepository->findOneBy(["id" => $id]);
+        $entityManager->remove($ad);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('ads');
+    }
+
 }

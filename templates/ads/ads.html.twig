@@ -22,8 +22,10 @@
             </div>
             <p>Description : {{ ad.text }}</p>
             <a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
+            <a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
         </div>
-        <a href="{{ path('addAd') }}">créer une annonce</a>
+
     {% endfor %}
+    <a href="{{ path('addAd') }}">créer une annonce</a>
 
 {% endblock %}

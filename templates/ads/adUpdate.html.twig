@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
-{% block title %}Tennis_ads{% endblock %}
+{% block title %} update Task {% endblock %}
 {% block body %}
-    <a href="{{ path('ads') }}">retour aux annonces</a>
-    <h1>Créer une annonce</h1>
+    <h1>Modifier annonce : {{ ad.title }}</h1>
+    <a href="{{ path('ads') }}">retour vers liste des tâches</a>
     {{ form_start(adForm) }}
     <div class="formUpdate">
 
@@ -37,11 +37,10 @@
             {{ form_errors(adForm.media) }}
         </div>
     </div>
-    <div class="btnFormUpdate">
-        {{ form_label(adForm.envoyer) }}
-        {{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
-    </div>
-
+        <div class="btnFormUpdate">
+            {{ form_label(adForm.envoyer) }}
+            {{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
+        </div>
     {{ form_end(adForm) }}
-
+    <a href="{{ path('changeStatus', {'id' : ad.id}) }}">Supprimer l'annonce</a>
 {% endblock %}
