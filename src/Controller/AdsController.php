@@ -19,13 +19,9 @@ class AdsController extends AbstractController
     public function ads(AdsRepository $adsRepository): Response
     {
         $ads = $adsRepository->findBy(['done' => false], ['date' => 'DESC']);
-        $adDone = $adsRepository->findBy(['done' => true]);
 
-        if ($ads) {
-            return $this->render('ads/ads.html.twig', [ 'ads' => $ads]);
-        } else {
-            return $this->render('ads/deleteAd.html.twig', [ 'adDone' => $adDone]);
-        }
+        return $this->render('ads/ads.html.twig', [ 'ads' => $ads]);
+
     }
 
     #[Route('/ad/{id}', name: 'ad', methods: ['GET'])]
@@ -74,7 +70,6 @@ class AdsController extends AbstractController
         $media = new Media();
 
         $form = $this->createForm(AdTypeForm::class, $ad);
-        dd($form);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             if ($form->get('media')->getData()) {
@@ -99,19 +94,6 @@ class AdsController extends AbstractController
         ]);
     }
 
-    #[Route('/adStatus/{id}', name: 'changeStatus', methods: ['GET'])]
-    public function changeStatus(AdsRepository $adRepository, $id, EntityManagerInterface $entityManager)
-    {
-        $ad = $adRepository->findOneBy(["id" => $id]);
-        if ($ad->getDone(false)) {
-            $ad->setDone(true);
-        } else {
-            $ad->setDone(false);
-        }
-        $entityManager->persist($ad);
-        $entityManager->flush();
-        return $this->redirectToRoute('deleteAd');
-    }
     #[Route('/deleteAd/{id}', name: 'deleteAd', methods: ['GET'])]
     public function deleteAd(AdsRepository $adRepository, $id, EntityManagerInterface $entityManager)
     {
@@ -120,6 +102,25 @@ class AdsController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('ads');
+    }
+
+    #[Route('/adStatus/{id}', name: 'changeStatus', methods: ['GET'])]
+    public function changeStatus(AdsRepository $adRepository, $id, EntityManagerInterface $entityManager)
+    {
+        $ad = $adRepository->findOneBy(["id" => $id]);
+
+        if ($ad->getDone() == false) {
+            $ad->setDone(true);
+        } else {
+            $ad->setDone(false);
+        }
+        $entityManager->persist($ad);
+        $entityManager->flush();
+
+        return $this->render('ads/deleteAd.html.twig', [
+            'ad' => $ad
+        ]);
+
     }
 
 }
