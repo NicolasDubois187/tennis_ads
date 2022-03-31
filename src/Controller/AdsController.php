@@ -6,6 +6,9 @@ use App\Entity\Ads;
 use App\Entity\Media;
 use App\Form\AdTypeForm;
 use App\Repository\AdsRepository;
+use App\Repository\AdTypeRepository;
+use App\Repository\BrandRepository;
+use App\Repository\MaterialTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,8 +40,8 @@ class AdsController extends AbstractController
     {
         $ad = new Ads();
         $media = new Media();
-
         $now = new \DateTime('now');
+
         $form = $this->createForm(AdTypeForm::class, $ad);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -111,16 +114,47 @@ class AdsController extends AbstractController
 
         if ($ad->getDone() == false) {
             $ad->setDone(true);
-        } else {
-            $ad->setDone(false);
+            $entityManager->persist($ad);
+            $entityManager->flush();
+
+            return $this->render('ads/deleteAd.html.twig', [
+                'ad' => $ad
+            ]);
         }
-        $entityManager->persist($ad);
-        $entityManager->flush();
+        else {
+            $ad->setDone(false);
+            $entityManager->persist($ad);
+            $entityManager->flush();
 
-        return $this->render('ads/deleteAd.html.twig', [
-            'ad' => $ad
+            return $this->redirectToRoute('ads', [
+                'ad' => $ad
+            ]);
+        }
+
+    }
+    #[Route('/adsByTypes', name: 'adsByTypes', methods: ['GET'])]
+    public function adsByTypes (
+        Request $request,
+        AdsRepository $adsRepository,
+        AdTypeRepository $adTypeRepository,
+        BrandRepository $brandRepository,
+        MaterialTypeRepository $materialTypeRepository
+        )
+    {
+        $title = $request->query->get('title');
+        $adType = $request->query->get('adType');
+        $brand = $request->query->get('brand');
+        $materialType = $request->query->get('materialType');
+        $ads = $adsRepository->getAdsByTypes($title, $adType, $brand, $materialType);
+        $adTypes = $adTypeRepository->findAll();
+        $brands = $brandRepository->findAll();
+        $materialTypes = $materialTypeRepository->findAll();
+        return $this->render('ads/ads.html.twig', [
+            'ads' => $ads,
+            'adTypes' => $adTypes,
+            'brands' => $brands,
+            'materialTypes' => $materialTypes
         ]);
-
     }
 
 }

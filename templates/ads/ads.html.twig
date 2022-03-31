@@ -4,6 +4,44 @@
 
     <h1>Annonces</h1>
     <a href="{{ path('home') }}">retour à l'accueil</a>
+    <form action="{{ path('adsByTypes') }}" method="GET">
+        <input type="text" name="title" id="title" value="" placeholder="title">
+
+        <select name="adType" id="adType">
+            <option value="">choisir un type d'annonce</option>
+            {% if adTypes is defined %}
+                {% for adType in adTypes %}
+                    <option value="{{ adType.name }}">{{ adType.name }}</option>
+                {% endfor %}
+            {% else %}
+                No adtypes found.
+            {% endif %}
+        </select>
+        <select name="brand" id="brand">
+            <option value="">choisir une marque</option>
+            {% if brands is defined %}
+                {% for brand in brands %}
+                    <option value="{{ brand.name }}">{{ brand.name }}</option>
+                {% endfor %}
+            {% else %}
+                No brands found.
+            {% endif %}
+        </select>
+        <select name="materialType" id="materialType">
+            <option value="">choisir un type de matériel</option>
+            {% if materialTypes is defined %}
+                {% for materialType in materialTypes %}
+                    <option value="{{ materialType.name }}">{{ materialType.name }}</option>
+                {% endfor %}
+            {% else %}
+                No materialTypes found.
+            {% endif %}
+
+        </select>
+
+        <input type="submit" value="rechercher">
+
+    </form>
     {% for ad in ads %}
         <div class="adsContainer">
             <div class="adsData">

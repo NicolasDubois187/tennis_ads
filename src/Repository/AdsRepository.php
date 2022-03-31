@@ -44,6 +44,47 @@ class AdsRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+    public function getAdsByTypes($title, $adType, $brand, $materialType)
+    {
+        $queryBuilder = $this->createQueryBuilder('ads')
+
+            ->select('ads')
+            ->leftJoin('ads.adType', 'adType')
+            ->addSelect('adType')
+            ->leftJoin('ads.brand', 'brand')
+            ->addSelect('brand')
+            ->leftJoin('ads.materialType', 'materialType')
+            ->addSelect('materialType')
+            ->leftJoin('ads.media', 'media')
+            ->addSelect('media')
+            ;
+            if ($title) {
+                $queryBuilder
+                    ->where('ads.title LIKE :title')
+                    ->setParameter('title', '%' . $title . '%');
+            }
+            if ($adType) {
+                $queryBuilder
+                    ->andWhere('adType.name LIKE :adType')
+                    ->setParameter('adType', '%' . $adType . '%');
+            }
+            if ($brand) {
+                $queryBuilder
+                    ->andWhere('brand.name LIKE :brand')
+                    ->setParameter('brand', '%' . $brand . '%');
+            }
+            if ($materialType) {
+                $queryBuilder
+                    ->andWhere('materialType.name LIKE :materialType')
+                    ->setParameter('materialType', '%' . $materialType . '%');
+            }
+            $query = $queryBuilder
+                ->orderBy('ads.date', 'DESC')
+                ->getQuery()
+        ;
+        $ads = $query->getArrayResult();
+        return $ads;
+    }
 
     // /**
     //  * @return Ads[] Returns an array of Ads objects
