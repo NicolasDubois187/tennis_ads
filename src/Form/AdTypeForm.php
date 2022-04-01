@@ -29,6 +29,9 @@ class AdTypeForm extends AbstractType
             ->add('text', TextType::class, [
                 'label' => 'description'
             ])
+            ->add('price', TextType::class, [
+                'label' => 'Prix'
+            ])
             ->add('materialType', EntityType::class, [
                 'label' => 'Type de matériel',
                 'class' => MaterialType::class,

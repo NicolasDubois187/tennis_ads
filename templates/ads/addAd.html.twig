@@ -18,6 +18,10 @@
             {{ form_label(adForm.text) }}
             {{ form_widget(adForm.text, { 'attr' : {'class':'adView' }}) }}
             {{ form_errors(adForm.text) }}
+
+            {{ form_label(adForm.price) }}
+            {{ form_widget(adForm.price, { 'attr' : {'class':'adView' }}) }}
+            {{ form_errors(adForm.price) }}
         </div>
         <div class="rightFormUpdate">
             {{ form_label(adForm.materialType) }}

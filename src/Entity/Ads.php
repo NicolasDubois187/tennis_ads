@@ -6,6 +6,7 @@ use App\Repository\AdsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdsRepository::class)]
+#[Entity, HasLifecycleCallbacks]
 class Ads
 {
     #[ORM\Id]
@@ -47,6 +48,12 @@ class Ads
     #[ORM\JoinColumn(nullable: true)]
     private $author;
 
+    #[ORM\Column(type: 'datetime_immutable', nullable: true)]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $price;
+
 
     public function getId(): ?int
     {
@@ -75,6 +82,11 @@ class Ads
         $this->date = $date;
 
         return $this;
+    }
+    #[PrePersist]
+    public function setDateValue(): void
+    {
+        $this->date = new \DateTime('now');
     }
 
     public function getCity(): ?string
@@ -175,7 +187,33 @@ class Ads
         return $this;
     }
 
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
 
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
+        return $this;
+    }
+    #[PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new \DateTimeImmutable();
+    }
+
+    public function getPrice(): ?string
+    {
+        return $this->price;
+    }
+
+    public function setPrice(?string $price): self
+    {
+        $this->price = $price;
+
+        return $this;
+    }
 
 }

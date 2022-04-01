@@ -7,10 +7,15 @@
         <img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
     <div class="adData">
         <h4>Type annonce : {{ ad.adType.name }}</h4>
+        {% if ad.adType.name == 'Vente' %}
+            <h4>Prix : {{ ad.price }}</h4>
+        {% endif %}
         <span>Catégorie : {{ ad.materialType.name }}</span>
         <span>Marque : {{ ad.brand.name }}</span>
         <span>Ajoutée le : {{ ad.date | format_date('short', locale='fr') }}</span>
         <span>Ville : {{ ad.city }}</span>
+        <span>Auteur : {{ ad.author.firstname }}</span>
+        <span>Contact : {{ ad.author.email }}</span>
 
     </div>
 

@@ -47,10 +47,14 @@
             <div class="adsData">
                 <h2>Titre : {{ ad.title }}</h2>
                 <h4>Type annonce : {{ ad.adType.name }}</h4>
+                {% if ad.adType.name == 'Vente' %}
+                <h4>Prix : {{ ad.price }}</h4>
+                {% endif %}
                 <span>Catégorie : {{ ad.materialType.name }}</span>
                 <span>Marque : {{ ad.brand.name }}</span>
                 <span>Ajoutée le : {{ ad.date | format_date('short', locale='fr') }}</span>
                 <span>Ville : {{ ad.city }}</span>
+                <span>Auteur : {{ ad.author.firstname }}</span>
 
             </div>
             <div class="adsImg">
@@ -60,7 +64,9 @@
             </div>
             <p>Description : {{ ad.text }}</p>
             <a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
+            {% if ad.author.id == app.user.id %}
             <a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
+            {% endif %}
         </div>
 
     {% endfor %}

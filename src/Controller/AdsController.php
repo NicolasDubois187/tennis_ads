@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Ads;
+use App\Entity\User;
 use App\Entity\Media;
 use App\Form\AdTypeForm;
 use App\Repository\AdsRepository;
@@ -19,11 +20,23 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class AdsController extends AbstractController
 {
     #[Route('/ads', name: 'ads', methods: ['GET'])]
-    public function ads(AdsRepository $adsRepository): Response
+    public function ads(
+        AdsRepository $adsRepository,
+        AdTypeRepository $adTypeRepository,
+        BrandRepository $brandRepository,
+        MaterialTypeRepository $materialTypeRepository
+        ): Response
     {
         $ads = $adsRepository->findBy(['done' => false], ['date' => 'DESC']);
-
-        return $this->render('ads/ads.html.twig', [ 'ads' => $ads]);
+        $adTypes = $adTypeRepository->findAll();
+        $brands = $brandRepository->findAll();
+        $materialTypes = $materialTypeRepository->findAll();
+        return $this->render('ads/ads.html.twig', [
+            'ads' => $ads,
+            'adTypes' => $adTypes,
+            'brands' => $brands,
+            'materialTypes' => $materialTypes
+        ]);
 
     }
 
@@ -40,6 +53,7 @@ class AdsController extends AbstractController
     {
         $ad = new Ads();
         $media = new Media();
+        $author = $this->getUser();
         $now = new \DateTime('now');
 
         $form = $this->createForm(AdTypeForm::class, $ad);
@@ -58,7 +72,10 @@ class AdsController extends AbstractController
             }
             $ad->setDate($now);
             $ad->setDone(false);
+            $ad->setAuthor($author);
+
             $adRepository->add($ad);
+
 
             return $this->redirectToRoute('ads');
         }
@@ -154,6 +171,15 @@ class AdsController extends AbstractController
             'adTypes' => $adTypes,
             'brands' => $brands,
             'materialTypes' => $materialTypes
+        ]);
+    }
+    #[Route('/profile', name: 'profile', methods: ['GET'])]
+    public function profile(AdsRepository $adRepository, $author)
+    {
+        $profile = $adRepository->findBy(["author" => $author]);
+        dd($profile);
+        return $this->render('ads/profile.html.twig', [
+            'profile' => $profile,
         ]);
     }
 

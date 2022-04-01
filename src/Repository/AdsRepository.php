@@ -57,6 +57,8 @@ class AdsRepository extends ServiceEntityRepository
             ->addSelect('materialType')
             ->leftJoin('ads.media', 'media')
             ->addSelect('media')
+            ->leftJoin('ads.author', 'author')
+            ->addSelect('author')
             ;
             if ($title) {
                 $queryBuilder
