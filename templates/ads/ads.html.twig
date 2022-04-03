@@ -3,6 +3,7 @@
 {% block body %}
 
     <h1>Annonces</h1>
+    <a href="{{ path('profile') }}">voir mon profil</a>
     <a href="{{ path('home') }}">retour à l'accueil</a>
     <form action="{{ path('adsByTypes') }}" method="GET">
         <input type="text" name="title" id="title" value="" placeholder="title">

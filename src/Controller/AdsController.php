@@ -3,17 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Ads;
+use App\Entity\ProfilePics;
 use App\Entity\User;
 use App\Entity\Media;
 use App\Form\AdTypeForm;
+use App\Form\UserType;
 use App\Repository\AdsRepository;
 use App\Repository\AdTypeRepository;
 use App\Repository\BrandRepository;
 use App\Repository\MaterialTypeRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -173,13 +177,62 @@ class AdsController extends AbstractController
             'materialTypes' => $materialTypes
         ]);
     }
-    #[Route('/profile', name: 'profile', methods: ['GET'])]
-    public function profile(AdsRepository $adRepository, $author)
+    #[Route('/profile', name: 'profile', methods: ['GET', 'POST'])]
+    public function index(AdsRepository $adsRepository)
     {
-        $profile = $adRepository->findBy(["author" => $author]);
-        dd($profile);
+        $ads = $adsRepository->findBy(['done' => false], ['date' => 'DESC']);
+
         return $this->render('ads/profile.html.twig', [
-            'profile' => $profile,
+            'ads' => $ads,
+        ]);
+    }
+    #[Route('/updateUser/{id}', name: 'updateUser', methods: ['GET', 'POST'])]
+    public function updateUser (
+        $id,
+        UserRepository $userRepository,
+        Request $request,
+        SluggerInterface $slugger,
+        UserPasswordHasherInterface $userPasswordHasher,
+        EntityManagerInterface $entityManager): Response
+    {
+        $user = $userRepository->findOneBy(['id' => $id]);
+        $media = new ProfilePics();
+
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('profilePics')->getData()) {
+                $mediaFile = $form->get('profilePics')->getData();
+                $originalFilename = pathinfo($mediaFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $fileName = $safeFilename . '-' . uniqid() . '-' . $mediaFile->guessExtension();
+                $mediaFile->move($this->getParameter('pathUpload_directory'), $fileName);
+
+                $media->setName($fileName);
+                $user->setProfilePics($media)
+                    ->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+                );
+                $userRepository->add($user);
+            } else {
+                $user
+                    ->setPassword(
+                        $userPasswordHasher->hashPassword(
+                            $user,
+                            $form->get('password')->getData()
+                        )
+
+                    );
+                $userRepository->add($user);
+            }
+            return $this->redirectToRoute('profile');
+        }
+        return $this->render('ads/updateUser.html.twig', [
+            'userForm' => $form->createView(),
+            'user' => $user
         ]);
     }
 

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+{% block title %}Tennis_ads{% endblock %}
+{% block body %}
+    <a href="{{ path('profile') }}">retour au profil</a>
+    {% if userForm is defined %}
+        {{ form_start(userForm) }}
+        <div class="formUpdate">
+
+            <div class="leftFormUpdate">
+                {{ form_label(userForm.lastname) }}
+                {{ form_widget(userForm.lastname, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.lastname) }}
+
+                {{ form_label(userForm.firstname) }}
+                {{ form_widget(userForm.firstname, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.firstname) }}
+
+                {{ form_label(userForm.email) }}
+                {{ form_widget(userForm.email, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.email) }}
+            </div>
+            <div class="rightFormUpdate">
+                {{ form_label(userForm.profilePics) }}
+                {{ form_widget(userForm.profilePics, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.profilePics) }}
+
+                {{ form_label(userForm.password) }}
+                {{ form_widget(userForm.password, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.password) }}
+
+                {{ form_label(userForm.phone) }}
+                {{ form_widget(userForm.phone, { 'attr' : {'class':'adView' }}) }}
+                {{ form_errors(userForm.phone) }}
+
+            </div>
+        </div>
+        <div class="btnFormUpdate">
+            {{ form_label(userForm.envoyer) }}
+            {{ form_widget(userForm.envoyer, { 'attr' : {'class':'adView' }}) }}
+        </div>
+        {{ form_end(userForm) }}
+    {% endif %}
+{% endblock %}
