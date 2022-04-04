@@ -1,76 +1,86 @@
 {% extends 'base.html.twig' %}
-{% block title %}Tennis_ads{% endblock %}
+{% block title %}Tennis_ads
+{% endblock %}
 {% block body %}
+	{% include 'commons/_header.html.twig' %}
+	<h1>Annonces</h1>
+	<a href="{{ path('profile') }}">voir mon profil</a>
+	<a href="{{ path('home') }}">retour à l'accueil</a>
+	<form action="{{ path('adsByTypes') }}" method="GET">
+		<input type="text" name="title" id="title" value="" placeholder="title">
 
-    <h1>Annonces</h1>
-    <a href="{{ path('profile') }}">voir mon profil</a>
-    <a href="{{ path('home') }}">retour à l'accueil</a>
-    <form action="{{ path('adsByTypes') }}" method="GET">
-        <input type="text" name="title" id="title" value="" placeholder="title">
+		<select name="adType" id="adType">
+			<option value="">choisir un type d'annonce</option>
+			{% if adTypes is defined %}
+				{% for adType in adTypes %}
+					<option value="{{ adType.name }}">{{ adType.name }}</option>
+				{% endfor %}
+			{% else %}
+				No adtypes found.
+			{% endif %}
+		</select>
+		<select name="brand" id="brand">
+			<option value="">choisir une marque</option>
+			{% if brands is defined %}
+				{% for brand in brands %}
+					<option value="{{ brand.name }}">{{ brand.name }}</option>
+				{% endfor %}
+			{% else %}
+				No brands found.
+			{% endif %}
+		</select>
+		<select name="materialType" id="materialType">
+			<option value="">choisir un type de matériel</option>
+			{% if materialTypes is defined %}
+				{% for materialType in materialTypes %}
+					<option value="{{ materialType.name }}">{{ materialType.name }}</option>
+				{% endfor %}
+			{% else %}
+				No materialTypes found.
+			{% endif %}
 
-        <select name="adType" id="adType">
-            <option value="">choisir un type d'annonce</option>
-            {% if adTypes is defined %}
-                {% for adType in adTypes %}
-                    <option value="{{ adType.name }}">{{ adType.name }}</option>
-                {% endfor %}
-            {% else %}
-                No adtypes found.
-            {% endif %}
-        </select>
-        <select name="brand" id="brand">
-            <option value="">choisir une marque</option>
-            {% if brands is defined %}
-                {% for brand in brands %}
-                    <option value="{{ brand.name }}">{{ brand.name }}</option>
-                {% endfor %}
-            {% else %}
-                No brands found.
-            {% endif %}
-        </select>
-        <select name="materialType" id="materialType">
-            <option value="">choisir un type de matériel</option>
-            {% if materialTypes is defined %}
-                {% for materialType in materialTypes %}
-                    <option value="{{ materialType.name }}">{{ materialType.name }}</option>
-                {% endfor %}
-            {% else %}
-                No materialTypes found.
-            {% endif %}
+		</select>
 
-        </select>
+		<input type="submit" value="rechercher">
 
-        <input type="submit" value="rechercher">
+	</form>
+	{% for ad in ads %}
+		<div class="adsContainer">
+			<div class="adsData">
+				<h2>Titre :
+					{{ ad.title }}</h2>
+				<h4>Type annonce :
+					{{ ad.adType.name }}</h4>
+				{% if ad.adType.name == 'Vente' %}
+					<h4>Prix :
+						{{ ad.price }}</h4>
+				{% endif %}
+				<span>Catégorie :
+					{{ ad.materialType.name }}</span>
+				<span>Marque :
+					{{ ad.brand.name }}</span>
+				<span>Ajoutée le :
+					{{ ad.date | format_date('short', locale='fr') }}</span>
+				<span>Ville :
+					{{ ad.city }}</span>
+				<span>Auteur :
+					{{ ad.author.firstname }}</span>
 
-    </form>
-    {% for ad in ads %}
-        <div class="adsContainer">
-            <div class="adsData">
-                <h2>Titre : {{ ad.title }}</h2>
-                <h4>Type annonce : {{ ad.adType.name }}</h4>
-                {% if ad.adType.name == 'Vente' %}
-                <h4>Prix : {{ ad.price }}</h4>
-                {% endif %}
-                <span>Catégorie : {{ ad.materialType.name }}</span>
-                <span>Marque : {{ ad.brand.name }}</span>
-                <span>Ajoutée le : {{ ad.date | format_date('short', locale='fr') }}</span>
-                <span>Ville : {{ ad.city }}</span>
-                <span>Auteur : {{ ad.author.firstname }}</span>
+			</div>
+			<div class="adsImg">
+				{% if ad.media %}
+					<img src="../public/upload_directory/{{ ad.media.name }}" alt="{{ ad.media.alt }}">
+				{% endif %}
+			</div>
+			<p>Description :
+				{{ ad.text }}</p>
+			<a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
+			{% if ad.author.id == app.user.id %}
+				<a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
+			{% endif %}
+		</div>
 
-            </div>
-            <div class="adsImg">
-            {% if ad.media %}
-                <img src="../public/upload_directory/{{ ad.media.name }}" alt="{{ ad.media.alt }}">
-            {% endif %}
-            </div>
-            <p>Description : {{ ad.text }}</p>
-            <a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
-            {% if ad.author.id == app.user.id %}
-            <a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
-            {% endif %}
-        </div>
-
-    {% endfor %}
-    <a href="{{ path('addAd') }}">créer une annonce</a>
-
+	{% endfor %}
+	<a href="{{ path('addAd') }}">créer une annonce</a>
+	{% include 'commons/_footer.html.twig' %}
 {% endblock %}

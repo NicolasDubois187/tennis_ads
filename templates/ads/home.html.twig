@@ -1,11 +1,25 @@
 {% extends 'base.html.twig' %}
-{% block title %} Tennis_ads {% endblock %}
+{% block title %}
+	Tennis_ads
+{% endblock %}
 {% block body %}
+	<div class="homePage">
 
-        <h1>Home page</h1>
-        <a href="{{ path('ads') }}">Connexion / Voir les annonces</a>
-        <a href="{{ path('app_register') }}">S' inscrire</a>
-        <a href="{{ path('app_logout') }}">Déconnexion</a>
+		<a id="homeLog" href="{{ path('ads') }}">
+			<button>Connexion / Voir les annonces</button>
+		</a>
+		<a id="homeRegister" href="{{ path('app_register') }}">
+			<button>S' inscrire</button>
+		</a>
+		<img id="logo" src="{{asset('assets/img/logo_tennisunivers.png')}}" alt="photo du logo">
+		<img id="woman" src="{{asset('assets/img/Woman.png')}}" alt="illustration joueuse">
+		<img id="man" src="{{asset('assets/img/Man.png')}}" alt="illustration joueur">
+		<div id="homeH2">
+			<img src="{{asset('assets/icons/ball1.svg')}}" alt="">
+			<h2>Inscrivez-vous et découvrez nos annonces</h2>
+			<img src="{{asset('assets/icons/ball2.svg')}}" alt="">
+		</div>
+	</div>
 
 
 {% endblock %}

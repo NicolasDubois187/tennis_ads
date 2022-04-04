@@ -1,15 +1,25 @@
 {% extends 'base.html.twig' %}
-{% block title %} update Task {% endblock %}
+{% block title %}
+	update Task
+{% endblock %}
 {% block body %}
-    <h1>Annonce : {{  ad.title  }}</h1>
-    <img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
-    <div class="adData">
-        <h4>Type annonce : {{ ad.adType.name }}</h4>
-        <span>Catégorie : {{ ad.materialType.name }}</span>
-        <span>Marque : {{ ad.brand.name }}</span>
-        <span>Ajoutée le : {{ ad.date | format_date('short', locale='fr') }}</span>
-        <span>Ville : {{ ad.city }}</span>
-    </div>
-    <a href="{{ path('deleteAd', {'id' : ad.id}) }}">Supprimer définitivement l'annonce</a>
-    <a href="{{ path('changeStatus', {'id' : ad.id}) }}">Réactiver l'annonce</a>
+	{% include 'commons/_header.html.twig' %}
+	<h1>Annonce :
+		{{  ad.title  }}</h1>
+	<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
+	<div class="adData">
+		<h4>Type annonce :
+			{{ ad.adType.name }}</h4>
+		<span>Catégorie :
+			{{ ad.materialType.name }}</span>
+		<span>Marque :
+			{{ ad.brand.name }}</span>
+		<span>Ajoutée le :
+			{{ ad.date | format_date('short', locale='fr') }}</span>
+		<span>Ville :
+			{{ ad.city }}</span>
+	</div>
+	<a href="{{ path('deleteAd', {'id' : ad.id}) }}">Supprimer définitivement l'annonce</a>
+	<a href="{{ path('changeStatus', {'id' : ad.id}) }}">Réactiver l'annonce</a>
+	{% include 'commons/_footer.html.twig' %}
 {% endblock %}

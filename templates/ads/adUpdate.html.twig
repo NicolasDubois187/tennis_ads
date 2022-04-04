@@ -1,50 +1,55 @@
 {% extends 'base.html.twig' %}
-{% block title %} update Task {% endblock %}
+{% block title %}
+	update Task
+{% endblock %}
 {% block body %}
-    <h1>Modifier annonce : {{ ad.title }}</h1>
-    <a href="{{ path('ads') }}">retour vers liste des tâches</a>
-    {{ form_start(adForm) }}
-    <div class="formUpdate">
+	{% include 'commons/_header.html.twig' %}
+	<h1>Modifier annonce :
+		{{ ad.title }}</h1>
+	<a href="{{ path('ads') }}">retour vers liste des tâches</a>
+	{{ form_start(adForm) }}
+	<div class="formUpdate">
 
-        <div class="leftFormUpdate">
-            {{ form_label(adForm.title) }}
-            {{ form_widget(adForm.title, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.title) }}
+		<div class="leftFormUpdate">
+			{{ form_label(adForm.title) }}
+			{{ form_widget(adForm.title, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.title) }}
 
-            {{ form_label(adForm.city) }}
-            {{ form_widget(adForm.city, {'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.city) }}
+			{{ form_label(adForm.city) }}
+			{{ form_widget(adForm.city, {'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.city) }}
 
-            {{ form_label(adForm.text) }}
-            {{ form_widget(adForm.text, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.text) }}
+			{{ form_label(adForm.text) }}
+			{{ form_widget(adForm.text, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.text) }}
 
-            {{ form_label(adForm.price) }}
-            {{ form_widget(adForm.price, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.price) }}
-        </div>
-        <div class="rightFormUpdate">
-            {{ form_label(adForm.materialType) }}
-            {{ form_widget(adForm.materialType, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.materialType) }}
+			{{ form_label(adForm.price) }}
+			{{ form_widget(adForm.price, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.price) }}
+		</div>
+		<div class="rightFormUpdate">
+			{{ form_label(adForm.materialType) }}
+			{{ form_widget(adForm.materialType, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.materialType) }}
 
-            {{ form_label(adForm.adType) }}
-            {{ form_widget(adForm.adType, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.adType) }}
+			{{ form_label(adForm.adType) }}
+			{{ form_widget(adForm.adType, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.adType) }}
 
-            {{ form_label(adForm.brand) }}
-            {{ form_widget(adForm.brand, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.brand) }}
+			{{ form_label(adForm.brand) }}
+			{{ form_widget(adForm.brand, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.brand) }}
 
-            {{ form_label(adForm.media) }}
-            {{ form_widget(adForm.media, { 'attr' : {'class':'adView' }}) }}
-            {{ form_errors(adForm.media) }}
-        </div>
-    </div>
-        <div class="btnFormUpdate">
-            {{ form_label(adForm.envoyer) }}
-            {{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
-        </div>
-    {{ form_end(adForm) }}
-    <a href="{{ path('changeStatus', {'id' : ad.id}) }}">Supprimer l'annonce</a>
+			{{ form_label(adForm.media) }}
+			{{ form_widget(adForm.media, { 'attr' : {'class':'adView' }}) }}
+			{{ form_errors(adForm.media) }}
+		</div>
+	</div>
+	<div class="btnFormUpdate">
+		{{ form_label(adForm.envoyer) }}
+		{{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
+	</div>
+	{{ form_end(adForm) }}
+	<a href="{{ path('changeStatus', {'id' : ad.id}) }}">Supprimer l'annonce</a>
+	{% include 'commons/_footer.html.twig' %}
 {% endblock %}

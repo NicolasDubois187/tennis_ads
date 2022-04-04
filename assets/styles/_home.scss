@@ -1,0 +1,61 @@
+.homePage {
+    font-family: "font-book";
+    background-color: #fff0df;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 45% 1fr;
+    grid-template-rows: 1fr 50% 1fr;
+    grid-template-areas: 
+    "log . register"
+    "woman logo man"
+    "h2 h2 h2";
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    #homeLog {
+        grid-area: log;
+    }
+    #homeRegister {
+        grid-area: register;
+    }
+    #logo {
+        grid-area: logo;
+        max-width: 100%;
+    }
+    #man {
+        grid-area: man;
+        max-width: 80%;    
+    }
+    #woman {
+        grid-area: woman;
+        max-width: 100%;
+           
+    }
+    #homeH2 {
+        grid-area: h2;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        h2 {
+            margin: 0;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        
+    }
+    button {
+        padding: 25px;
+        border-radius: 100px;
+        color: $color-3;
+        background-color: $color-7;
+        border: none;
+        transition: 0.4s;
+        &:hover {
+            transform: scale(1.1);
+            color: $color-7;
+            background-color: $color-3;
+        }
+    }
+}
