@@ -1,0 +1,33 @@
+@font-face {
+    font-family: "font-book";
+    src: url(../font/GentiumBookBasic-Regular.ttf);
+}
+@font-face {
+    font-family: "font-robot";
+    src: url(../font/Roboto-Regular.ttf);
+}
+$color-1: aliceblue;
+$color-2: black;
+$color-3: #F88F52;
+$color-4: #FBCE9E;
+$color-5: #7ACFB0;
+$color-6: #00BDC8;
+$color-7: #1C5588;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth;
+}
+a {
+    text-decoration: none;
+}
+li {
+    list-style: none;
+}
+body {
+    background-color: $color-1;
+    font-family: "font-robot";
+}
