@@ -1,8 +1,19 @@
 <header>
-	<div class="nav">
-		<img src="{{asset('assets/img/logo_tennisunivers2.png')}}" alt="">
-		<a href="{{ path('ads') }}">Connexion / Voir les annonces</a>
-		<a href="{{ path('app_register') }}">S' inscrire</a>
-		<a href="{{ path('app_logout') }}">Déconnexion</a>
+	<label for="toggle"><img src="{{asset('assets/icons/menuBurger.svg')}}" alt=""></label>
+	<input type="checkbox" id="toggle">
+	<div class="nav" id="nav">
+		<div class="logoType">
+			<a href="{{ path('ads') }}">
+				<img src="{{asset('assets/img/logo_tennisunivers.png')}}" alt="photo du logo">
+			</a>
+		</div>
+		<div class="linkNav">
+			<a href="{{ path('profile') }}">
+				<button>Profil</button>
+			</a>
+			<a href="{{ path('app_logout') }}">
+				<button>Déconnexion</button>
+			</a>
+		</div>
 	</div>
 </header>

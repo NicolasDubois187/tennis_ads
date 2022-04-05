@@ -13,7 +13,9 @@
 		{{ app.user.phone }}
 		Email :
 		{{ app.user.email }}
-		<img src="../public/upload_directory/{{ app.user.profilePics.name }}" alt="">
+		{% if app.user.profilePics %}
+			<img src="../public/upload_directory/{{ app.user.profilePics.name }}" alt="">
+		{% endif %}
 		<a href="{{ path('updateUser', {'id' : app.user.id}) }}">Modifier profil</a>
 
 

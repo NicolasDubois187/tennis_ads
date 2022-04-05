@@ -8,14 +8,46 @@
     grid-template-columns: 1fr 45% 1fr;
     grid-template-rows: 1fr 50% 1fr;
     grid-template-areas: 
-    "log . register"
+    "log ball register"
     "woman logo man"
     "h2 h2 h2";
     align-items: center;
     text-align: center;
     justify-items: center;
+    overflow: hidden;
+    @media (max-width: 760px) {
+        grid-template-columns: 50% 1fr;
+        grid-template-rows: 20% 1fr 40% 1fr;
+        grid-template-areas:
+        "logo logo"
+        "log register"
+        "woman man"
+        "h2 h2";
+    }
+    @media (max-width: 600px) {
+        grid-template-columns: 1fr;
+        grid-template-rows: 20% 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "logo"
+        "log"
+        "register"
+        "ball"
+        "h2";
+    }
     #homeLog {
         grid-area: log;
+        padding: 20px;
+    }
+    #ball {
+        grid-area: ball;
+        max-width: 45%;
+        opacity: 0.3;
+        @media (max-width: 760px) {
+            display: none;
+        }
+        @media (max-width: 600px) {
+            display: grid;
+        }
     }
     #homeRegister {
         grid-area: register;
@@ -23,15 +55,29 @@
     #logo {
         grid-area: logo;
         max-width: 100%;
+        @media (max-width: 760px) {
+            max-width: 60%;
+        }
     }
     #man {
         grid-area: man;
-        max-width: 80%;    
+        max-width: 80%;
+        @media (max-width: 760px) {
+            max-width: 60%;
+        }
+        @media (max-width: 600px) {
+            display: none;
+        }
     }
     #woman {
         grid-area: woman;
         max-width: 100%;
-           
+        @media (max-width: 760px) {
+            max-width: 80%;
+        }
+        @media (max-width: 600px) {
+            display: none;
+        }      
     }
     #homeH2 {
         grid-area: h2;
@@ -42,7 +88,15 @@
             margin: 0;
             margin-left: 5px;
             margin-right: 5px;
+            @media (max-width: 600px) {
+                font-size: 1.2rem;
+            } 
         }
+        @media (max-width: 600px) {
+            margin: 0 20px;
+            font-size: 0.5rem;
+        } 
+
         
     }
     button {
