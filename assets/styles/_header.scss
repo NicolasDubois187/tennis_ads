@@ -6,7 +6,7 @@ header {
     {
         display: none;
     }
-    @media all and (max-width: 700px)
+    @media all and (max-width: 800px)
     {
         display: flex;
         flex-direction: column;
@@ -22,8 +22,8 @@ header {
             height: 200px;
             width: 200px;
             justify-content: center;
-            margin-top: 10px;
-            margin-right: 10px;
+            margin-top: 20px;
+            margin-right: 20px;
             .logoType {
                 text-align: center;
                 img {
@@ -74,7 +74,11 @@ header {
             width: 40%;
             }
         }
-    
+        #upPage {
+            opacity: 0;
+            transition: 0.5s;
+            cursor: pointer;
+        }
         .linkNav {
             display: flex;
             flex-wrap: nowrap;
@@ -82,18 +86,24 @@ header {
                 margin-left: 10px;
             }
             button {
-                padding: 10px;
-                width: 120px;
+                padding: 8px;
+                width: 150px;
                 border-radius: 100px;
                 color: $color-3;
                 background-color: $color-7;
                 border: none;
                 transition: 0.4s;
                 &:hover {
-                    transform: scale(1.1);
+                    transform: scale(1.05);
                     color: $color-7;
                     background-color: $color-3;
                 }
+                @media (max-width: 1000px) {
+                    width: 120px;
+                    padding: 5px;
+                    font-size: 0.8rem;
+                }
+
             }    
         }
     }

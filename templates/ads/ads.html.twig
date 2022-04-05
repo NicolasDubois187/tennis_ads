@@ -3,10 +3,10 @@
 {% endblock %}
 {% block body %}
 	{% include 'commons/_header.html.twig' %}
-	<h1>Annonces</h1>
+	<h1>Le coin des bonnes affaires</h1>
 
 	<form action="{{ path('adsByTypes') }}" method="GET">
-		<input type="text" name="title" id="title" value="" placeholder="title">
+		<input type="text" name="title" id="title" value="" placeholder="titre">
 
 		<select name="adType" id="adType">
 			<option value="">choisir un type d'annonce</option>
@@ -80,6 +80,6 @@
 		</div>
 
 	{% endfor %}
-	<a href="{{ path('addAd') }}">créer une annonce</a>
+
 	{% include 'commons/_footer.html.twig' %}
 {% endblock %}

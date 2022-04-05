@@ -13,3 +13,15 @@ import "./styles/app.scss";
 
 // start the Stimulus application
 //import "./bootstrap";
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    upPage.style.opacity = 1;
+  } else {
+    upPage.style.opacity = 0;
+  }
+});
+upPage.addEventListener("click", () => {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+});

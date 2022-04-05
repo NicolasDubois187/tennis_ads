@@ -1,0 +1,26 @@
+footer {
+    background-color: black;
+    color: aliceblue;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: space-around;
+    @media (max-width: 600px) {
+        display: grid;
+        justify-content: center;
+    }
+    .contact {
+        display: grid;
+        text-align: left;
+        line-height: 20px;
+        @media (max-width: 600px) {
+            text-align: center;
+        }
+    }
+    #logoFooter {
+        max-width: 10%;
+        @media (max-width: 600px) {
+            display: none;
+        }
+    }
+}
