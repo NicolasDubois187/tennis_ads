@@ -12,6 +12,8 @@ header {
         flex-direction: column;
         text-align: center;
         align-items: flex-end;
+        background-color: $color-7;
+        height: 50px;
     
         #nav 
         {
@@ -65,6 +67,7 @@ header {
         text-align: center;
         margin: 0 auto;
         position: fixed;
+        height: 100px;
         width: 100%;
         padding: 0 10px;
         background-color: $color-2;
