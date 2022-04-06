@@ -2,31 +2,46 @@
 {% block title %}Tennis_ads
 {% endblock %}
 {% block body %}
-	{% include 'commons/_header.html.twig' %}
-	<a href="{{ path('ads') }}">retour vers annonces</a>
-	<h1>Annonce :
-		{{  ad.title  }}</h1>
-	<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
-	<div class="adData">
+	<section class="adSection">
+		{% include 'commons/_header.html.twig' %}
+		<a href="{{ path('ads') }}" class="linkAd">retour vers annonces</a>
+		<h2>Titre :
+			{{  ad.title  }}</h2>
 		<h4>Type annonce :
 			{{ ad.adType.name }}</h4>
 		{% if ad.adType.name == 'Vente' %}
 			<h4>Prix :
 				{{ ad.price }}</h4>
 		{% endif %}
-		<span>Catégorie :
-			{{ ad.materialType.name }}</span>
-		<span>Marque :
-			{{ ad.brand.name }}</span>
-		<span>Ajoutée le :
-			{{ ad.date | format_date('short', locale='fr') }}</span>
-		<span>Ville :
-			{{ ad.city }}</span>
-		<span>Auteur :
-			{{ ad.author.firstname }}</span>
-		<span>Contact :
-			{{ ad.author.email }}</span>
+		<div class="adDataContainer">
+			<div class="adData">
+				<span>Catégorie :
+					{{ ad.materialType.name }}</span>
+				<span>Marque :
+					{{ ad.brand.name }}</span>
+				<span>Ajoutée le :
+					{{ ad.date | format_date('short', locale='fr') }}</span>
+				<span>Ville :
+					{{ ad.city }}</span>
+				<span>Auteur :
+					{{ ad.author.firstname }}</span>
+				<span>Email :
+					{{ ad.author.email }}</span>
+				{% if ad.author.phone %}
+					<span>Tel :
+						{{ ad.author.phone }}</span>
+				{% endif %}
 
-	</div>
-	{% include 'commons/_footer.html.twig' %}
+			</div>
+			<div class="adImage">
+				<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
+			</div>
+		</div>
+		<div class="adDescription">
+			<h4>Description :
+			</h4>
+			<p>{{  ad.text  }}</p>
+		</div>
+		{% include 'commons/_footer.html.twig' %}
+	</section>
 {% endblock %}

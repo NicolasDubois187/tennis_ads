@@ -3,60 +3,76 @@
 {% endblock %}
 {% block body %}
 	{% include 'commons/_header.html.twig' %}
-	<a href="{{ path('ads') }}">retour aux annonces</a>
-	<div class="userContainer">
-		Nom :
-		{{ app.user.lastname }}
-		Prénom :
-		{{ app.user.firstname }}
-		téléphone :
-		{{ app.user.phone }}
-		Email :
-		{{ app.user.email }}
-		{% if app.user.profilePics %}
-			<img src="../public/upload_directory/{{ app.user.profilePics.name }}" alt="">
-		{% endif %}
-		<a href="{{ path('updateUser', {'id' : app.user.id}) }}">Modifier profil</a>
-
-
-	</div>
-	{% for ad in ads %}
-		{% if ad.author.id == app.user.id %}
-			<div class="adsContainer">
-				<div class="adsData">
-					<h2>Titre :
-						{{ ad.title }}</h2>
-					<h4>Type annonce :
-						{{ ad.adType.name }}</h4>
-					{% if ad.adType.name == 'Vente' %}
-						<h4>Prix :
-							{{ ad.price }}</h4>
-					{% endif %}
-					<span>Catégorie :
-						{{ ad.materialType.name }}</span>
-					<span>Marque :
-						{{ ad.brand.name }}</span>
-					<span>Ajoutée le :
-						{{ ad.date | format_date('short', locale='fr') }}</span>
-					<span>Ville :
-						{{ ad.city }}</span>
-					<span>Auteur :
-						{{ ad.author.firstname }}</span>
-
-				</div>
-				<div class="adsImg">
-					{% if ad.media %}
-						<img src="../public/upload_directory/{{ ad.media.name }}" alt="{{ ad.media.alt }}">
-					{% endif %}
-				</div>
-				<p>Description :
-					{{ ad.text }}</p>
-				<a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
-
-				<a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
-
+	<section class="sectionProfile">
+		<a href="{{ path('ads') }}">retour aux annonces</a>
+		<div class="userContainer">
+			<div class="leftUser">
+				<span>
+					Nom :
+					{{ app.user.lastname }}
+				</span>
+				<span>
+					Prénom :
+					{{ app.user.firstname }}
+				</span>
+				<span>
+					téléphone :
+					{{ app.user.phone }}
+				</span>
+				<span>
+					Email :
+					{{ app.user.email }}
+				</span>
 			</div>
-		{% endif %}
-	{% endfor %}
+			<div class="rightUser">
+				<div class="picProfile">
+					{% if app.user.profilePics %}
+						<img src="{{ asset('upload_directory/' ~ app.user.profilePics.name) }}" alt="{{ app.user.profilePics.alt }}">
+					{% endif %}
+				</div>
+				<a href="{{ path('updateUser', {'id' : app.user.id}) }}">Modifier profil</a>
+			</div>
+		</div>
+		<div class="ads">
+			{% for ad in ads %}
+				{% if ad.author.id == app.user.id %}
+					<div class="adsContainer">
+						<div class="adsData">
+							<h4>Titre :
+								{{ ad.title }}</h4>
+							<h5>Type annonce :
+								{{ ad.adType.name }}</h5>
+
+							<span>Catégorie :
+								{{ ad.materialType.name }}</span>
+							<span>Marque :
+								{{ ad.brand.name }}</span>
+							<span>Ajoutée le :
+								{{ ad.date | format_date('short', locale='fr') }}</span>
+							<span>Ville :
+								{{ ad.city }}</span>
+							<span>Auteur :
+								{{ ad.author.firstname }}</span>
+
+						</div>
+						<div class="adsMedia">
+							<div class="adsImg">
+								{% if ad.media %}
+									<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" alt="{{ ad.media.alt }}">
+								{% endif %}
+							</div>
+							{% if ad.adType.name == 'Vente' %}
+								<h4>Prix :
+									{{ ad.price }}</h4>
+							{% endif %}
+							<a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
+
+							<a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
+						</div>
+					</div>
+				{% endif %}
+			{% endfor %}
+		</div>
+	</section>
 	{% include 'commons/_footer.html.twig' %}
 {% endblock %}

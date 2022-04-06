@@ -2,7 +2,7 @@ header {
 
     height: 100px;
     
-    label, #toggle
+    #labelNav, #toggle
     {
         display: none;
     }
@@ -42,7 +42,7 @@ header {
             }
         }    
          
-        label 
+        #labelNav 
         {
             width: 100%;
             position: fixed;

@@ -1,0 +1,100 @@
+.sectionUpdate {
+    height: 100vh;
+    background-color: $color-7;
+    position: relative;
+    .linkUpdate {
+        margin: 20px;
+        color: $color-6;
+        transition: 0.1s;
+        &:hover {
+            transform: scale(0.98);
+
+        }
+    }
+    h2 {
+        margin: 20px;
+        color: $color-1;
+        @media (max-width: 750px) {
+            margin: 10px; 
+        }
+    }
+    .formUpdate {
+        display: grid;
+        grid-template-columns: 50% 1fr;
+        max-width: 60%;
+        margin: 20px auto;
+        border: 2px solid black;
+        border-radius: 10px;
+        box-shadow: 0px 0px 8px 1px white;
+        padding: 10px;
+        gap: 20px;
+        @media (max-width: 750px) {
+            grid-template-columns: 1fr;
+            margin: 5px auto; 
+        }
+        @media (max-width: 380px) {
+            border: none;
+            box-shadow: none;
+            margin: 0 auto;
+         }
+        .leftFormUpdate {
+            display: grid;
+            label {
+                color: $color-3;
+                line-height: 30px;
+            }
+            input {
+                border-radius: 10px;
+                padding: 5px;
+            }
+        }
+        .rightFormUpdate {
+            display: grid;
+            label {
+                color: $color-3;
+                line-height: 30px;
+            }
+            select {
+                cursor: pointer;
+                border-radius: 10px;
+                padding: 5px;
+            }
+        }
+    }
+    .descUpdate {
+        display: grid;
+        color: $color-3;
+        max-width: 60%;
+        margin: 0 auto;
+        textarea {
+            padding: 5px;
+            resize: none;
+            border-radius: 10px;
+        }
+    }
+    .btnFormUpdate {
+        display: flex;
+        text-align: center;
+        justify-content: center;
+        margin: 20px;
+        button {
+            padding: 8px;
+                width: 150px;
+                border-radius: 100px;
+                color: $color-7;
+                background-color: $color-3;
+                border: none;
+                transition: 0.4s;
+                &:hover {
+                    transform: scale(1.05);
+                    color: $color-7;
+                    background-color: $color-4;
+                }
+        }
+    }
+    footer {
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+    }
+}

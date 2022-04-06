@@ -3,7 +3,7 @@
 {% endblock %}
 {% block body %}
 	{% include 'commons/_header.html.twig' %}
-	<section>
+	<section class="adsSection">
 		<div class="selectContainer">
 			<h1>LE COIN DES BONNES AFFAIRES</h1>
 
@@ -48,14 +48,10 @@
 			{% for ad in ads %}
 				<div class="adsContainer">
 					<div class="adsData">
-						<h2>Titre :
-							{{ ad.title }}</h2>
-						<h4>Type annonce :
-							{{ ad.adType.name }}</h4>
-						{% if ad.adType.name == 'Vente' %}
-							<h4>Prix :
-								{{ ad.price }}</h4>
-						{% endif %}
+						<h4>Titre :
+							{{ ad.title }}</h4>
+						<h5>Type annonce :
+							{{ ad.adType.name }}</h5>
 						<span>Catégorie :
 							{{ ad.materialType.name }}</span>
 						<span>Marque :
@@ -66,21 +62,26 @@
 							{{ ad.city }}</span>
 						<span>Auteur :
 							{{ ad.author.firstname }}</span>
+					</div>
+					<div class="adsMedia">
+						<div class=" adsImg">
+							{% if ad.media %}
+								<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" alt="{{ ad.media.alt }}">
+							{% endif %}
+						</div>
+						{% if ad.adType.name == 'Vente' %}
+							<h4>Prix :
+								{{ ad.price }}</h4>
+						{% endif %}
 						<a href="{{ path('ad', {'id' : ad.id}) }}">Voir annonce</a>
 						{% if ad.author.id == app.user.id %}
 							<a href="{{ path('adUpdate', {'id' : ad.id}) }}">Modifier annonce</a>
-						{% endif %}
-
-					</div>
-					<div class="adsImg">
-						{% if ad.media %}
-							<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" alt="{{ ad.media.alt }}">
 						{% endif %}
 					</div>
 				</div>
 			{% endfor %}
 		</div>
+	</div>
 
-	</section>
-	{% include 'commons/_footer.html.twig' %}
-{% endblock %}
+</section>
+{% include 'commons/_footer.html.twig' %}{% endblock %}

@@ -2,52 +2,56 @@
 {% block title %}Tennis_ads
 {% endblock %}
 {% block body %}
-	{% include 'commons/_header.html.twig' %}
-	<a href="{{ path('ads') }}">retour aux annonces</a>
-	<h1>Créer une annonce</h1>
-	{{ form_start(adForm) }}
-	<div class="formUpdate">
+	<section class="sectionAddAd">
+		{% include 'commons/_header.html.twig' %}
+		<a href="{{ path('ads') }}" class="linkAddAd">retour aux annonces</a>
+		<h2>Créer une annonce</h2>
+		{{ form_start(adForm) }}
+		<div class="formUpdate">
 
-		<div class="leftFormUpdate">
-			{{ form_label(adForm.title) }}
-			{{ form_widget(adForm.title, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.title) }}
+			<div class="leftFormUpdate">
+				{{ form_label(adForm.title) }}
+				{{ form_widget(adForm.title, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.title) }}
 
-			{{ form_label(adForm.city) }}
-			{{ form_widget(adForm.city, {'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.city) }}
+				{{ form_label(adForm.city) }}
+				{{ form_widget(adForm.city, {'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.city) }}
 
+				{{ form_label(adForm.price) }}
+				{{ form_widget(adForm.price, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.price) }}
+			</div>
+			<div class="rightFormUpdate">
+				{{ form_label(adForm.adType) }}
+				{{ form_widget(adForm.adType, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.adType) }}
+
+				{{ form_label(adForm.materialType) }}
+				{{ form_widget(adForm.materialType, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.materialType) }}
+
+
+				{{ form_label(adForm.brand) }}
+				{{ form_widget(adForm.brand, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.brand) }}
+
+				{{ form_label(adForm.media) }}
+				{{ form_widget(adForm.media, { 'attr' : {'class':'adView' }}) }}
+				{{ form_errors(adForm.media) }}
+			</div>
+		</div>
+		<div class="descUpdate">
 			{{ form_label(adForm.text) }}
 			{{ form_widget(adForm.text, { 'attr' : {'class':'adView' }}) }}
 			{{ form_errors(adForm.text) }}
-
-			{{ form_label(adForm.price) }}
-			{{ form_widget(adForm.price, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.price) }}
 		</div>
-		<div class="rightFormUpdate">
-			{{ form_label(adForm.materialType) }}
-			{{ form_widget(adForm.materialType, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.materialType) }}
-
-			{{ form_label(adForm.adType) }}
-			{{ form_widget(adForm.adType, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.adType) }}
-
-			{{ form_label(adForm.brand) }}
-			{{ form_widget(adForm.brand, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.brand) }}
-
-			{{ form_label(adForm.media) }}
-			{{ form_widget(adForm.media, { 'attr' : {'class':'adView' }}) }}
-			{{ form_errors(adForm.media) }}
+		<div class="btnFormUpdate">
+			{{ form_label(adForm.envoyer) }}
+			{{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
 		</div>
-	</div>
-	<div class="btnFormUpdate">
-		{{ form_label(adForm.envoyer) }}
-		{{ form_widget(adForm.envoyer, { 'attr' : {'class':'adView' }}) }}
-	</div>
 
-	{{ form_end(adForm) }}
-	{% include 'commons/_footer.html.twig' %}
+		{{ form_end(adForm) }}
+		{% include 'commons/_footer.html.twig' %}
+	</section>
 {% endblock %}
