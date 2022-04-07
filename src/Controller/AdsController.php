@@ -209,25 +209,9 @@ class AdsController extends AbstractController
                 $mediaFile->move($this->getParameter('pathUpload_directory'), $fileName);
 
                 $media->setName($fileName);
-                $user->setProfilePics($media)
-                    ->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $form->get('password')->getData()
-                        )
-                );
-                $userRepository->add($user);
-            } else {
-                $user
-                    ->setPassword(
-                        $userPasswordHasher->hashPassword(
-                            $user,
-                            $form->get('password')->getData()
-                        )
-
-                    );
-                $userRepository->add($user);
-            }
+                $user->setProfilePics($media);
+            } 
+            $userRepository->add($user);
             return $this->redirectToRoute('profile');
         }
         return $this->render('ads/updateUser.html.twig', [

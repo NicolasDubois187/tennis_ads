@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,9 +19,6 @@ class UserType extends AbstractType
         $builder
             ->add('email', TextType::class, [
                 'label' => 'Email'
-            ])
-            ->add('password', TextType::class, [
-                'label' => 'Mot de Passe'
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom'
