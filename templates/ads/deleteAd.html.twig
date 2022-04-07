@@ -1,25 +1,52 @@
 {% extends 'base.html.twig' %}
 {% block title %}
-	update Task
+	Delete_Task
 {% endblock %}
 {% block body %}
-	{% include 'commons/_header.html.twig' %}
-	<h1>Annonce :
-		{{  ad.title  }}</h1>
-	<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
-	<div class="adData">
+	<section class="deleteSection">
+		{% include 'commons/_header.html.twig' %}
+		<div class="linksDelete">
+			<a href="{{ path('ads') }}" class="linkDelete">retour vers annonces</a>
+			<a href="{{ path('deleteAd', {'id' : ad.id}) }}" class="linkDelete">Supprimer définitivement l'annonce</a>
+			<a href="{{ path('changeStatus', {'id' : ad.id}) }}" class="linkDelete">Réactiver l'annonce</a>
+		</div>
+		<h2>Titre :
+			{{  ad.title  }}</h2>
 		<h4>Type annonce :
 			{{ ad.adType.name }}</h4>
-		<span>Catégorie :
-			{{ ad.materialType.name }}</span>
-		<span>Marque :
-			{{ ad.brand.name }}</span>
-		<span>Ajoutée le :
-			{{ ad.date | format_date('short', locale='fr') }}</span>
-		<span>Ville :
-			{{ ad.city }}</span>
-	</div>
-	<a href="{{ path('deleteAd', {'id' : ad.id}) }}">Supprimer définitivement l'annonce</a>
-	<a href="{{ path('changeStatus', {'id' : ad.id}) }}">Réactiver l'annonce</a>
-	{% include 'commons/_footer.html.twig' %}
+		{% if ad.adType.name == 'Vente' %}
+			<h4>Prix :
+				{{ ad.price }}</h4>
+		{% endif %}
+		<div class="adDataContainer">
+			<div class="adData">
+				<span>Catégorie :
+					{{ ad.materialType.name }}</span>
+				<span>Marque :
+					{{ ad.brand.name }}</span>
+				<span>Ajoutée le :
+					{{ ad.date | format_date('short', locale='fr') }}</span>
+				<span>Ville :
+					{{ ad.city }}</span>
+				<span>Auteur :
+					{{ ad.author.firstname }}</span>
+				<span>Email :
+					{{ ad.author.email }}</span>
+				{% if ad.author.phone %}
+					<span>Tel :
+						{{ ad.author.phone }}</span>
+				{% endif %}
+
+			</div>
+			<div class="adImage">
+				<img src="{{ asset('upload_directory/' ~ ad.media.name) }}" id="adImg">
+			</div>
+		</div>
+		<div class="adDescription">
+			<h4>Description :
+			</h4>
+			<p>{{  ad.text  }}</p>
+		</div>
+		{% include 'commons/_footer.html.twig' %}
+	</section>
 {% endblock %}

@@ -1,18 +1,22 @@
-.adSection {
+.deleteSection {
     height: 100vh;
     background-color: $color-7;
     position: relative;
-    overflow: hidden;
-    @media (max-width: 450px) {
-       height: 120vh;
-    }
-    .linkAd {
-        margin: 20px;
-        color: $color-6;
-        transition: 0.1s;
-        &:hover {
-            transform: scale(0.98);
-
+    @media (max-width: 680px) {
+        height: 150vh;
+    } 
+    .linksDelete {
+        @media (max-width: 680px) {
+            display: grid;
+        }    
+        .linkDelete {
+            margin: 20px;
+            color: $color-6;
+            transition: 0.1s;
+            &:hover {
+                transform: scale(0.98);
+                
+            }
         }
     }
     h2 {

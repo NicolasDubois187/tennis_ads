@@ -6,6 +6,8 @@ footer {
     text-align: center;
     padding: 10px;
     justify-content: space-around;
+    height: 12vh;
+    margin: 0;
     @media (max-width: 600px) {
         display: grid;
         justify-content: center;
@@ -13,7 +15,8 @@ footer {
     .contact {
         display: grid;
         text-align: left;
-        line-height: 20px;
+        font-size: 0.9rem;
+        line-height: 15px;
         @media (max-width: 600px) {
             text-align: center;
         }

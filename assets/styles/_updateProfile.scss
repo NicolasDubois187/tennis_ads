@@ -1,12 +1,9 @@
-.sectionUpdate {
+.sectionUpdateUser {
     height: 100vh;
+    overflow: hidden;
     background-color: $color-7;
     position: relative;
-    overflow: hidden;
-    @media (max-width: 750px) {
-        height: 120vh; 
-    }
-    .linkUpdate {
+    a {
         margin: 20px;
         color: $color-6;
         transition: 0.1s;
@@ -16,11 +13,8 @@
         }
     }
     h2 {
-        margin: 10px;
+        margin: 20px;
         color: $color-1;
-        @media (max-width: 750px) {
-            margin: 10px; 
-        }
     }
     .formUpdate {
         display: grid;
@@ -66,17 +60,6 @@
             }
         }
     }
-    .descUpdate {
-        display: grid;
-        color: $color-3;
-        max-width: 60%;
-        margin: 0 auto;
-        textarea {
-            padding: 5px;
-            resize: none;
-            border-radius: 10px;
-        }
-    }
     .btnFormUpdate {
         display: flex;
         text-align: center;
@@ -96,7 +79,7 @@
                     background-color: $color-4;
                 }
         }
-    }
+    }    
     footer {
         position: absolute;
         width: 100%;

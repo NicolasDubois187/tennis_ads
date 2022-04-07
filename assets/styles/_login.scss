@@ -1,0 +1,20 @@
+.loginSection {
+    background-color: $color-7;
+    a {
+        margin: 20px;
+        color: $color-6;
+        transition: 0.1s;
+        &:hover {
+            transform: scale(0.98);
+
+        }
+    }
+    form {
+        max-width: 50%;
+        margin: 10px auto;
+        color: $color-1;
+        button {
+            margin: 20px;
+        }
+    }
+}
