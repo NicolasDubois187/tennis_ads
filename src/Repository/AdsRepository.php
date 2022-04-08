@@ -45,9 +45,10 @@ class AdsRepository extends ServiceEntityRepository
         }
     }
     public function getAdsByTypes($title, $adType, $brand, $materialType)
+    // la fonction DQL avec en paramètre les variables déterminées dans le controller
     {
         $queryBuilder = $this->createQueryBuilder('ads')
-
+        // création de la requête sur le modèle Ads
             ->select('ads')
             ->leftJoin('ads.adType', 'adType')
             ->addSelect('adType')
@@ -59,6 +60,7 @@ class AdsRepository extends ServiceEntityRepository
             ->addSelect('media')
             ->leftJoin('ads.author', 'author')
             ->addSelect('author')
+            // les jointures sur des tables, modèles extérieurs pour récupérer leurs données
             ;
             if ($title) {
                 $queryBuilder
@@ -80,11 +82,14 @@ class AdsRepository extends ServiceEntityRepository
                     ->andWhere('materialType.name LIKE :materialType')
                     ->setParameter('materialType', '%' . $materialType . '%');
             }
+            // pour chaque condition, si elle est remplie, on renvoi les données correspondantes
             $query = $queryBuilder
+            // on passe notre requête dans une variable
                 ->orderBy('ads.date', 'DESC')
                 ->getQuery()
         ;
         $ads = $query->getArrayResult();
+        // on attribut le résultat de la requête à la variable $ads 
         return $ads;
     }
 
